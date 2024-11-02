@@ -50,8 +50,8 @@
                     target.insertAdjacentHTML('afterbegin',
                         `<div class='article'>
                             <h3 class="article-title">${result[i]['title']}</h3>
-                            <p>${result[i]['summary']}</p>
-                            <a href="${result[i]['link']}">記事リンク</a>
+                            <p class="article-summary">${result[i]['summary']}</p>
+                            <a class="atricle-link" href="${result[i]['link']}">read more...</a>
                         </div>`
                     )
                 }

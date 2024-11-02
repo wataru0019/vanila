@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meata charset="utf-8">
+        <title>ファイルアップロード</title>
+        <link rel="stylesheet" href="style.css">
+    </head>
+    <body>
+        <h1>ファイルアップロード</h1>
+        <div class="container">
+            <form id="uploadForm" action="http://127.0.0.1:8000/fileupload" method="post" enctype="multipart/form-data">
+                <input type="file" name="file" id="fileInput" style="display: none;">
+                <div id="dropZone" class="drop-zone">
+                    ドラッグ&ドロップでファイルをアップロード
+                </div>
+                <div id="preview" class="preview"></div>
+                <input type="submit" value="アップロード">
+            </form>
+        </div>
+        <script src="script.js"></script>
+    </body>
+</html>

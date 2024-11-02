@@ -1,6 +1,7 @@
-from fastapi import FastAPI, Form
+from fastapi import FastAPI, Form, File, UploadFile
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
+import os
 
 import feedparser
 import pprint
@@ -53,6 +54,10 @@ def read_rss(rss_url: RSSRequest):
 #     print(url)
 #     return articles
 
-@app.get("/items/{item_id}")
-def read_item(item_id: int, q: str = None):
-    return {"item_id": item_id, "q": q}
+@app.post("/fileupload")
+async def file_upload(file: UploadFile = Form(...)):
+    contents = await file.read()
+    file_location = f"./{file.filename}"
+    with open(file_location, "wb") as f:
+        f.write(contents)
+    return {"filename": file.filename, "content-type": file.content_type}

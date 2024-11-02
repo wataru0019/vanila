@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <link rel="stylesheet" type="text/css" href="reset.css">
+        <link rel="stylesheet" type="text/css" href="style.css">
+    </head>
+    <main>
+        <h1 class="title">My RSS</h1>
+        <div class="container">
+            <div class="url_post" id="url_post">
+                <form action="http://127.0.0.1:8000/rss" method="post" id="rssForm">
+                    <div class="form-control">
+                        <label for="url">URL:</label>
+                        <input class="text-input" type="url" name="url" id="urlInput" placeholder="URL" required>
+                    </div>
+                    <div class="form-control">
+                        <input type="submit" value="Post">
+                    </div>
+                    <div id="error-message"></div>
+                </form>
+            </div>
+            <div class="articles" id="article_point">
+            </div>
+        </div>
+    </main>
+    <script>
+        document.getElementById('rssForm').addEventListener('submit', async function(event){
+            event.preventDefault();
+
+            const formData = new FormData(event.target);
+            console.log(formData);
+
+            const data = Object.fromEntries(formData.entries());
+            console.log(data);
+
+            try {
+                const response = await fetch('http://127.0.0.1:8000/rss', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(data)
+                })
+
+                const result = await response.json();
+                console.log(result)
+                let target = document.getElementById('article_point')
+                for (let i = 0; i < result.length; i++) {
+                    target.insertAdjacentHTML('afterbegin',
+                        `<div class='article'>
+                            <h3 class="article-title">${result[i]['title']}</h3>
+                            <p>${result[i]['summary']}</p>
+                            <a href="${result[i]['link']}">記事リンク</a>
+                        </div>`
+                    )
+                }
+            } catch (error) {
+                document.getElementById('article_point').insertAdjacentHTML('afterbegin',
+                `<div class='article'>
+                    <h3 class="article-title">Error</h3>
+                    <p>記事の取得に失敗しました</p>
+                </div>`)
+                console.error("Error:", error);
+            }
+        })
+    </script>
+    <!-- <script>
+        document.getElementById('rssForm').addEventListener('submit', function(event){
+            let urlInput = document.getElementById('urlInput');
+            let errorMessage = document.getElementById("error-message");
+            if(!urlInput.validitu.valid){
+                urlInput.setCustomValidity('Please enter a Valid URL');
+                errorMessage.textContent = urlInput.validationMessage;
+                console.log(urlInput.validationMessage);
+                event.preventDefault();
+            } else {
+                urlInput.setCustomValidity('');
+                errorMessage.textContent = '';
+            }
+        });
+
+        document.getElementById('urlInput').addEventListener('input', function(event){
+            this.setCustomValidity('');
+            document.getElementById('error-message').textContent = '';
+        })
+    </script> -->
+</html>

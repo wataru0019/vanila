@@ -47,9 +47,9 @@ h1 {
     font-size: 0.8em;
     margin-bottom: 0.5em;
     color: gray;
-    overflow: hidden;
-    /* text-overflow: ellipsis; */
-    /* white-space: nowrap; */
+    overflow: auto;
+    text-overflow: ellipsis;
+    /* white-space: nowrap */
 }
 
 .article .article-link {

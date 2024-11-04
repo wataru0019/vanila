@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>情報収集ダッシュボード</title>
+        <link rel="stylesheet" href="reset.css">
+        <link rel="stylesheet" href="style.css">
+    </head>
+    <body>
+        <header>
+            <div class="header-menu">
+                <p class="header-menu-btn" id="headerMenu">メニュー</p>
+                <p class="header-title">情報収集ダッシュボード</p>
+            </div>
+            <div class="header-tools">
+                <form class="header-search" action="/" method="GET" id="headerSearch">
+                    <input type="text" name="search" placeholder="検索">
+                    <button type="submit">検索</button>
+                </form>
+            </div>
+        </header>
+        <div class="signup">
+            <h2>新規登録</h2>
+            <form action="/" method="post" id="signupForm" class="p-form">
+                <div class="form-control">
+                    <label for="user-name">ユーザー名：</label>
+                    <input type="text" name="user-name" id="userName" placeholder="ユーザー名を入力してください" required>
+                </div>
+                <div class="form-control">
+                    <label for="user-email">メールアドレス：</label>
+                    <input type="email" name="user-email" id="userEmail" placeholder="メールアドレスを入力してください" required>
+                </div>
+                <div class="form-control">
+                    <label for="user-password">パスワード：</label>
+                    <input type="password" name="user-password" id="userPassword" placeholder="パスワードを入力してください" required>
+                </div>
+                <div class="form-control">
+                    <button type="submit" class="btn">登録</button>
+                </div>
+            </form>
+    </body>
+</html>

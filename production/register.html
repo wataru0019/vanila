@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>情報収集ダッシュボード</title>
+        <link rel="stylesheet" href="reset.css">
+        <link rel="stylesheet" href="style.css">
+    </head>
+    <body>
+        <header>
+            <div class="header-menu">
+                <p class="header-menu-btn" id="headerMenu">メニュー</p>
+                <p class="header-title">情報収集ダッシュボード</p>
+            </div>
+            <div class="header-tools">
+                <form class="header-search" action="/" method="GET" id="headerSearch">
+                    <input type="text" name="search" placeholder="検索">
+                    <button type="submit">検索</button>
+                </form>
+            </div>
+        </header>
+        <div class="register">
+            <h2>フォローするサイトURLを入力してください</h2>
+            <form action="/" method="post" id="registerForm" class="p-form">
+                <div class="form-control">
+                    <label for="info-title">タイトル</label>
+                    <input type="text" name="info-title" id="infoTitle" placeholder="タイトルを入力してください" required>
+                </div>
+                <div class="form-control">
+                    <label for="info-title">URL</label>
+                    <input type="url" name="info-url" id="infoUrl" placeholder="URLを入力してください" required>
+                </div>
+                <div class="form-control">
+                    <button type="submit" class="btn">登録</button>
+                </div>
+            </form>
+        </div>
+    </body>
+</html>

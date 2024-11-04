@@ -18,8 +18,19 @@ app.add_middleware(
 
 @app.get("/")
 def read_root():
-    data = articles
-    return data
+# https://rss.itmedia.co.jp/rss/2.0/itmedia_all.xml
+    rss_url = "https://rss.itmedia.co.jp/rss/2.0/itmedia_all.xml"
+
+    f = feedparser.parse(rss_url)
+
+    articles = []
+    for article in f['entries'][0:10]:
+        articles.append({
+            'title': article['title'],
+            'link': article['link'],
+            'summary': article['summary']
+        })
+    return articles
 
 class RSSRequest(BaseModel):
     url: str

@@ -36,6 +36,8 @@ class Jimintou(Seijika):
 if __name__ == '__main__':
     seijika = Seijika('men', 30, 'wataru')
     jimintou = Jimintou('men', 55, 'taro', 'Jimintou')
+    partys = [seijika, jimintou]
     seijika.word()
     seijika.word2('辛い')
     jimintou.word3('小寺')
+    print(partys[0].name)

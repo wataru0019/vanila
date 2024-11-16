@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+    <meta charset="utf-8">
+    <title>株価検索</title>
+    <link rel="stylesheet" href="/Users/watzu/projects/vanila/bootstrap-5.3.3/dist/css/bootstrap.css">
+    <body>
+        <h1>株価検索</h1>
+        <form method="post" id="serchForm">
+            <input type="text" class="form-control form-control-lg" name="stock_code" placeholder="銘柄コード">
+            <input type="submit" value="検索" class="btn btn-primary">
+        </form>
+        <ul id="result" class="ul"></ul>
+        <script>
+            let stock_code = document.querySelector('input[name="stock_code"]');
+            let serchForm = document.querySelector('#serchForm');
+            let result = document.querySelector('#result');
+            serchForm.addEventListener('submit', function(e) {
+                if (stock_code.value !== '') {
+                    e.preventDefault();
+                    result.innerHTML = '';
+                    fetch('http://127.0.0.1:8000/stock', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({
+                            stock_code: stock_code.value.toString()
+                        })
+                    }).then(function(response) {
+                        if (!response.ok) {
+                            throw new Error('Network response was not ok');
+                        }
+                        return response.json();
+                    }).then(function(data) {
+                        if (data.length === 0) {
+                            return;
+                        }
+                        for (let i = 0; i < data.length; i++){
+                            newElement = document.createElement('li');
+                            newSpanName = document.createElement('span');
+                            newSpanCode = document.createElement('span');
+                            newElement.setAttribute('data-stockid', data[i].stockid);
+                            newElement.setAttribute('id', data[i].stockid);
+                            newButton = document.createElement('button');
+                            newButton.setAttribute('data-stockid', data[i].stockid);
+                            newButton.setAttribute('class', 'btn btn-primary');
+                            newButton.textContent = 'getPrice';
+                            newButton.addEventListener('click', function(){
+                                __stockid = this.getAttribute('data-stockid');
+                                fetch('http://127.0.0.1:8000/price', {
+                                    method: 'POST',
+                                    headers: {
+                                        'Content-Type': 'application/json'
+                                    },
+                                    body: JSON.stringify({
+                                        stockid: data[i].stockid
+                                    })
+                                }).then(function(response) {
+                                    if (!response.ok) {
+                                        throw new Error('Network response was not ok');
+                                    }
+                                    return response.json();
+                                }).then(function(data) {
+                                    newSpanPrice = document.createElement('span');
+                                    newSpanPrice.textContent = data;
+                                    t = document.getElementById(__stockid);
+                                    console.log(t);
+                                    t.appendChild(newSpanPrice);
+                                })});
+                            newSpanName.textContent = data[i].name;
+                            newSpanCode.textContent = data[i].stockid;
+                            newElement.appendChild(newSpanName);
+                            newElement.appendChild(newSpanCode);
+                            result.appendChild(newElement);
+                            newElement.appendChild(newButton);
+                        }
+                        console.log(data);
+                    })
+                    .catch(function(error) {
+                        console.log(error);
+                    });
+                }
+            });
+
+            stock_code.addEventListener('change', function(){
+                console.log(stock_code.value);
+            })
+        </script>
+    </body>
+</html>

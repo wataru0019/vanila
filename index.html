@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>私のポートフォリオ</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <header>
+        <nav>
+            <ul>
+                <li><a href="#home">ホーム</a></li>
+                <li><a href="#about">自己紹介</a></li>
+                <li><a href="#projects">プロジェクト</a></li>
+                <li><a href="#contact">お問い合わせ</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <section id="home">
+        <div class="hero">
+            <h1>山田 太郎</h1>
+            <p>Webデベロッパー</p>
+        </div>
+    </section>
+
+    <section id="about">
+        <h2>自己紹介</h2>
+        <div class="about-content">
+            <img src="images/profile.jpg" alt="プロフィール写真">
+            <p>私はフロントエンド開発に特化したWebデベロッパーです。
+               ユーザー体験を重視した開発を心がけています。</p>
+        </div>
+    </section>
+
+    <section id="projects">
+        <h2>プロジェクト</h2>
+        <div class="project-grid">
+            <div class="project-card">
+                <img src="images/project1.jpg" alt="プロジェクト1">
+                <h3>プロジェクト1</h3>
+                <p>プロジェクトの説明文がここに入ります。</p>
+            </div>
+            <div class="project-card">
+                <img src="images/project2.jpg" alt="プロジェクト2">
+                <h3>プロジェクト2</h3>
+                <p>プロジェクトの説明文がここに入ります。</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="contact">
+        <h2>お問い合わせ</h2>
+        <form id="contact-form">
+            <input type="text" placeholder="お名前" required>
+            <input type="email" placeholder="メールアドレス" required>
+            <textarea placeholder="メッセージ" required></textarea>
+            <button type="submit">送信</button>
+        </form>
+    </section>
+
+    <footer>
+        <p>&copy; 2024 私のポートフォリオ. All rights reserved.</p>
+    </footer>
+
+    <script src="js/main.js"></script>
+</body>
+</html> 

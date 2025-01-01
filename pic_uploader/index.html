@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>カメラで写真を撮る</title>
+</head>
+<body>
+    <h1>カメラで写真を撮る</h1>
+    <video id="video" width="640" height="480" autoplay></video>
+    <button id="snap">写真を撮る</button>
+    <button id="cameraToggle">カメラON/OFF</button>
+    <canvas id="canvas" width="640" height="480"></canvas>
+    <button id="upload">アップロード</button>
+    <input type="file" id="fileInput" style="display:none;">
+
+    <script>
+        const video = document.getElementById('video');
+        const canvas = document.getElementById('canvas');
+        const context = canvas.getContext('2d');
+        const snapButton = document.getElementById('snap');
+        const uploadButton = document.getElementById('upload');
+        const fileInput = document.getElementById('fileInput');
+        const cameraToggleButton = document.getElementById('cameraToggle');
+        
+        let stream = null;
+
+        // カメラの起動/停止を制御する関数
+        async function toggleCamera() {
+            if (stream) {
+                // カメラを停止
+                stream.getTracks().forEach(track => track.stop());
+                video.srcObject = null;
+                stream = null;
+                cameraToggleButton.textContent = 'カメラON';
+            } else {
+                // カメラを起動
+                try {
+                    stream = await navigator.mediaDevices.getUserMedia({ video: true });
+                    video.srcObject = stream;
+                    cameraToggleButton.textContent = 'カメラOFF';
+                } catch (err) {
+                    console.error("カメラの起動に失敗しました:", err);
+                }
+            }
+        }
+
+        // カメラトグルボタンのイベントリスナー
+        cameraToggleButton.addEventListener('click', toggleCamera);
+
+        // 初期起動
+        toggleCamera();
+
+        // 写真を撮る
+        snapButton.addEventListener('click', () => {
+            context.drawImage(video, 0, 0, canvas.width, canvas.height);
+        });
+
+        // アップロードボタンのクリックイベント
+        // アップロードボタンがクリックされた時の処理
+        uploadButton.addEventListener('click', () => {
+            // canvasの内容をBlobオブジェクトに変換
+            canvas.toBlob(blob => {
+                // BlobからFileオブジェクトを作成（ファイル名はphoto.png）
+                const file = new File([blob], "photo.png", { type: "image/png" });
+                
+                // ダウンロードリンクを作成
+                const downloadLink = document.createElement('a');
+                downloadLink.href = URL.createObjectURL(file);
+                downloadLink.download = 'photo.png';
+                
+                // リンクをクリックしてダウンロードを開始
+                downloadLink.click();
+                
+                // URLオブジェクトを解放
+                URL.revokeObjectURL(downloadLink.href);
+                
+                console.log('写真を保存しました');
+                alert('写真をダウンロードしました');
+            });
+        });
+    </script>
+</body>
+</html>
